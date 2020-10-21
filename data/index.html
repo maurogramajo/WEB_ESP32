@@ -14,6 +14,7 @@
 
     <!-- Custom styles for this template -->
     <link href="cover.css" rel="stylesheet">
+
   </head>
 
   <body class="text-center">
@@ -33,6 +34,7 @@
       <main role="main" class="inner cover">
         <h1 class="cover-heading">LED</h1>
         <p class="lead">Presiona el LED. No te olvides de ver la placa ESP32.</p>
+        <div class="wheel" id="picker"></div>
         <img id="led" src="LED_OFF.png" height="300px" onclick="cambiarEstadoLed()">
         <p class="lead">
           <!--<a href="https://getbootstrap.com/docs/4.0/examples/cover/#" class="btn btn-lg btn-secondary">Learn more</a>-->
@@ -41,7 +43,7 @@
 
       <footer class="mastfoot mt-auto">
         <div class="inner">
-          <p>Página para <a href="">GΩ Electrónica</a>, por <a href="https://www.linkedin.com/in/mauro-adrian-gramajo-93772953/">Mauro Gramajo</a>.</p>
+          <!--<p>Página para <a href="">GΩ Electrónica</a>, por <a href="https://www.linkedin.com/in/mauro-adrian-gramajo-93772953/">Mauro Gramajo</a>.</p>-->
         </div>
       </footer>
     </div>
@@ -50,7 +52,9 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
     <script src="funciones.js"></script>
+
     <script src="jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="jquery-slim.min.js"><\/script>')</script>
     <script src="popper.min.js"></script>

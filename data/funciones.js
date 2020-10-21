@@ -74,3 +74,20 @@ function cambiarEstadoLed() {
     doSend("getLEDState");
 
 }
+
+//COLOR PICKER
+var colorWheel = new iro.ColorPicker("#picker", {
+
+    layout: [
+    { 
+      component: iro.ui.Wheel,
+      options: {
+        width: 150,
+        wheelLightness: true,
+        wheelAngle: 0,
+        wheelDirection: "anticlockwise"
+      } 
+    }
+    ]
+  
+});
