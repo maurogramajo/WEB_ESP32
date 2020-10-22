@@ -17,7 +17,18 @@
 #include "SPIFFS.h"
 #include <WebSocketsServer.h>
 
+#include <ws2812.h>
+
+#define PIN_RGB 18
+#define NUM_PIXELS  2
+rgbVal *pixels;
+
 #define LED 2
+
+//WS2812B
+int r,g,b;
+char numero[3]="";
+int posiaux, aux;
 
 bool estadoLed;
 
@@ -37,6 +48,8 @@ IPAddress primaryDNS(0, 0, 0, 0);
 IPAddress secondaryDNS(0, 0, 0, 0);
 
 char msg_buf[10];
+
+void displayOff(void);
 
 // Callback: receiving any WebSocket message
 void onWebSocketEvent(uint8_t client_num,
@@ -81,6 +94,46 @@ void onWebSocketEvent(uint8_t client_num,
         ws.broadcastTXT(msg_buf);
 
       // Message not recognized
+      } else if(strstr((char*)payload,"rgb")) {
+
+          numero[0]=NULL;
+          numero[1]=NULL;
+          numero[2]=NULL;
+          for(int i=4;payload[i]!=',';i++) {
+              numero[i-4]=payload[i];
+              posiaux = i;
+          }
+          
+          r = atoi(numero);
+
+          numero[0]=NULL;
+          numero[1]=NULL;
+          numero[2]=NULL;
+          aux = posiaux+3;
+          for(int i=aux;payload[i]!=',';i++) {
+              numero[i-aux]=payload[i];
+              posiaux = i;
+          }
+          
+          g = atoi(numero);
+
+          numero[0]=NULL;
+          numero[1]=NULL;
+          numero[2]=NULL;
+          aux = posiaux+3;
+          for(int i=aux;payload[i]!=')';i++) {
+              numero[i-aux]=payload[i];
+              posiaux = i;
+          }
+          
+          b = atoi(numero);
+
+          displayOff();
+
+          for (int i = 0; i < NUM_PIXELS; i++) {
+              pixels[i] = makeRGBVal(r, g, b);
+          }
+          ws2812_setColors(NUM_PIXELS, pixels);
       } else {
         Serial.println("[%u] Message not recognized");
       }
@@ -205,8 +258,18 @@ void setup() {
     server.begin();
     ws.begin();
     ws.onEvent(onWebSocketEvent);
+    ws2812_init(PIN_RGB, LED_WS2812);
+    pixels = (rgbVal*)malloc(sizeof(rgbVal) * NUM_PIXELS);
+    displayOff();
 }
 
 void loop() {
     ws.loop();
+}
+
+void displayOff() {
+  for (int i = 0; i < NUM_PIXELS; i++) {
+    pixels[i] = makeRGBVal(0, 0, 0);
+  }
+  ws2812_setColors(NUM_PIXELS, pixels);
 }

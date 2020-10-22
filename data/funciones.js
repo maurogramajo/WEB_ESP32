@@ -1,13 +1,26 @@
 var url = "ws://192.168.0.184:81/";
+// Connect to WebSocket server
+var websocket= new WebSocket(url);
+
+//COLOR PICKER
+var colorWheel = new iro.ColorPicker("#picker", {
+
+    width: 200,
+  color: "rgb(255, 0, 0)",
+  borderWidth: 1,
+  borderColor: "#fff"  
+});
+
+var values = document.getElementById("values");
 
 function init() {
     wsConnect(url);
 }
 
-function wsConnect(url) {
-    // Connect to WebSocket server
-    websocket = new WebSocket(url);
-    
+// Call the init function as soon as the page loads
+window.addEventListener("load", init, false);
+
+function wsConnect(url) {    
     // Assign callbacks
     websocket.onopen = function(evt) { onOpen(evt) };
     websocket.onclose = function(evt) { onClose(evt) };
@@ -65,48 +78,14 @@ function doSend(message) {
     websocket.send(message);
 }
 
-// Call the init function as soon as the page loads
-window.addEventListener("load", init, false);
-
 function cambiarEstadoLed() {
-
     doSend("toggleLED");
     doSend("getLEDState");
-
 }
 
-//COLOR PICKER
-var colorWheel = new iro.ColorPicker("#picker", {
-
-    width: 200,
-  color: "rgb(255, 0, 0)",
-  borderWidth: 1,
-  borderColor: "#fff",
-    // layout: [
-    // { 
-    //   component: iro.ui.Wheel,
-    //   options: {
-    //     width: 200,
-    //     wheelLightness: true,
-    //     wheelAngle: 0,
-    //     wheelDirection: "anticlockwise",
-    //     borderWidth: 1,
-    //     borderColor: "#fff"
-    //   } 
-    // }
-    // ]
-  
-});
-
-var values = document.getElementById("values");
-
-// https://iro.js.org/guide.html#color-picker-events
 colorWheel.on(["color:init", "color:change"], function(color){
-  // Show the current color in different formats
-  // Using the selected color: https://iro.js.org/guide.html#selected-color-api
-  values.innerHTML = [
-    //"hex: " + color.hexString,
-    "rgb: " + color.rgbString,
-    //"hsl: " + color.hslString,
-  ].join("<br>");
+    values.innerHTML = ["rgb: " + color.rgbString].join("<br>");
+    if (websocket.readyState) {
+        doSend(color.rgbString);
+    }
 });
