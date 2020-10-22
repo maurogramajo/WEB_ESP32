@@ -78,16 +78,35 @@ function cambiarEstadoLed() {
 //COLOR PICKER
 var colorWheel = new iro.ColorPicker("#picker", {
 
-    layout: [
-    { 
-      component: iro.ui.Wheel,
-      options: {
-        width: 150,
-        wheelLightness: true,
-        wheelAngle: 0,
-        wheelDirection: "anticlockwise"
-      } 
-    }
-    ]
+    width: 200,
+  color: "rgb(255, 0, 0)",
+  borderWidth: 1,
+  borderColor: "#fff",
+    // layout: [
+    // { 
+    //   component: iro.ui.Wheel,
+    //   options: {
+    //     width: 200,
+    //     wheelLightness: true,
+    //     wheelAngle: 0,
+    //     wheelDirection: "anticlockwise",
+    //     borderWidth: 1,
+    //     borderColor: "#fff"
+    //   } 
+    // }
+    // ]
   
+});
+
+var values = document.getElementById("values");
+
+// https://iro.js.org/guide.html#color-picker-events
+colorWheel.on(["color:init", "color:change"], function(color){
+  // Show the current color in different formats
+  // Using the selected color: https://iro.js.org/guide.html#selected-color-api
+  values.innerHTML = [
+    //"hex: " + color.hexString,
+    "rgb: " + color.rgbString,
+    //"hsl: " + color.hslString,
+  ].join("<br>");
 });

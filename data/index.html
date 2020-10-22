@@ -18,7 +18,7 @@
   </head>
 
   <body class="text-center">
-
+    <!--<a href="https://github.com/maurogramajo" title="View on GitHub" class="GithubCorner"><svg width="130" height="130" viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg" svg-inline="" role="presentation" focusable="false" tabindex="-1" class="GithubCorner__svg"><path d="M130 0v130L72.48 72.48l-.022-3.312 5.313-4.84c1.77-1.76 2.214-3.52 2.214-4.84l.387.276c4.81 3.377 10.867 5.7 17.764-1.156 2.214-2.2 3.1-4.4 3.1-7.04.885 0 3.098-1.32 4.87-4.84l-.1-.108c-.401-.403-2.147-1.847-7.427-2.972-.886-1.76-2.214-3.52-3.985-5.28-1.77-1.76-3.541-3.08-5.312-3.96-.886-5.72-3.1-7.04-3.1-7.04-3.984 1.76-4.87 3.96-5.312 4.84-2.656 0-4.87.88-7.084 3.08-7.25 7.206-4.64 12.778-1.273 17.503l.388.537c-.826 0-2.039.384-3.276 1.15l-.266.17-.98.974c-1.684-1.029-3.343-3.005-2.495-6.087l.14-.473c.168-.637.553-2.702-.855-4.53l-.21-.253c-.319-.349-1.7-1.74-1.38.764l.029.2s.443 1.68-.82 4.63l-.13.29c-.141.234-2.305 4.023 3.022 7.701l.264.178-2.575 2.558H60.6L0 0h130z" fill-rule="nonzero"></path></svg></a>-->
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
       <header class="masthead mb-auto">
         <div class="inner">
@@ -34,8 +34,14 @@
       <main role="main" class="inner cover">
         <h1 class="cover-heading">LED</h1>
         <p class="lead">Presiona el LED. No te olvides de ver la placa ESP32.</p>
-        <div class="wheel" id="picker"></div>
-        <img id="led" src="LED_OFF.png" height="300px" onclick="cambiarEstadoLed()">
+        <div class="wrap">
+          <div class="half">
+            <div class="wheel" id="picker"></div>
+            <div id="values"></div>
+          </div>
+          <img id="led" src="LED_OFF.png" height="300px" onclick="cambiarEstadoLed()">
+        </div>
+        
         <p class="lead">
           <!--<a href="https://getbootstrap.com/docs/4.0/examples/cover/#" class="btn btn-lg btn-secondary">Learn more</a>-->
         </p>
@@ -43,7 +49,7 @@
 
       <footer class="mastfoot mt-auto">
         <div class="inner">
-          <!--<p>Página para <a href="">GΩ Electrónica</a>, por <a href="https://www.linkedin.com/in/mauro-adrian-gramajo-93772953/">Mauro Gramajo</a>.</p>-->
+          <p>Página para <a href="">GΩ Electrónica</a>, por <a href="https://www.linkedin.com/in/mauro-adrian-gramajo-93772953/">Mauro Gramajo</a>.</p>
         </div>
       </footer>
     </div>
