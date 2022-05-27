@@ -17,11 +17,12 @@
 #include "SPIFFS.h"
 #include <WebSocketsServer.h>
 
-#include <ws2812.h>
+#include <NeoPixelBus.h>
 
-#define PIN_RGB 18
-#define NUM_PIXELS  2
-rgbVal *pixels;
+#define PIN_RGB 23
+#define NUMPIXELS  10
+
+NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod> strip(NUMPIXELS, PIN_RGB);
 
 #define LED 2
 
@@ -128,12 +129,10 @@ void onWebSocketEvent(uint8_t client_num,
           
           b = atoi(numero);
 
-          displayOff();
-
-          for (int i = 0; i < NUM_PIXELS; i++) {
-              pixels[i] = makeRGBVal(r, g, b);
+          for (int i = 0; i < NUMPIXELS; i++) {
+              strip.SetPixelColor(i,RgbColor(r,g,b));
           }
-          ws2812_setColors(NUM_PIXELS, pixels);
+          strip.Show();
       } else {
         Serial.println("[%u] Message not recognized");
       }
@@ -258,8 +257,8 @@ void setup() {
     server.begin();
     ws.begin();
     ws.onEvent(onWebSocketEvent);
-    ws2812_init(PIN_RGB, LED_WS2812);
-    pixels = (rgbVal*)malloc(sizeof(rgbVal) * NUM_PIXELS);
+
+    strip.Begin();
     displayOff();
 }
 
@@ -268,8 +267,8 @@ void loop() {
 }
 
 void displayOff() {
-  for (int i = 0; i < NUM_PIXELS; i++) {
-    pixels[i] = makeRGBVal(0, 0, 0);
-  }
-  ws2812_setColors(NUM_PIXELS, pixels);
+    for(int i = 0; i < NUMPIXELS; i++){
+        strip.SetPixelColor(i,RgbColor(0,0,0));
+    }
+    strip.Show();
 }
